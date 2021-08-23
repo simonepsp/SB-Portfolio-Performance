@@ -15,7 +15,7 @@ If not, log in into your Saxo Trader account and head to Account --> Historic Re
 
 Once you have an .xlsx file downloaded, you are all set.
 
-## Why didn't you just wrote a csv configuration for Portfolio Performance / 're u dumb?
+## Why didn't you just write a csv configuration for Portfolio Performance / 're u dumb?
 First of all since Saxo Bank doesn't provide a .csv file I would have had to convert their xlsx file either through the impressive xlsx2csv or by exporting manually on Numbers / OnlyOffice / younameit.
 
 Also, even after converting it, the transaction report contains dashes which produce import errors on Portfolio Performance. That sucks.
