@@ -140,7 +140,7 @@ class Main(object):
             # -- Price
 
             if transaction[self.XLS_COL_BOOKED_AMOUNT_INSTRUMENT_CUR] != '-':
-                price = transaction[self.XLS_COL_BOOKED_AMOUNT_INSTRUMENT_CUR]
+                price = transaction[self.XLS_COL_BOOKED_AMOUNT_ACCOUNT_CUR]
             else:
                 price = transaction[self.XLS_COL_AMOUNT]
 
