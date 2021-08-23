@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # !/usr/local/bin/python3
 
-# Project name: Saxo Bank To Portfolio Manager
-# Version: 0.1
+# Project name: Saxo Bank To Portfolio Performance
+# Version: 0.1.1
 # Written by Simonepsp
 
 import argparse
@@ -17,12 +17,11 @@ class Main(object):
 
     # Settings
     CONFIG_FILE_PATH = 'config.json'
-    UTILITY_NAME = 'Saxo Bank (SB) XLSX Report ---> Portfolio Manager CSV'
+    UTILITY_NAME = 'Saxo Bank (SB) XLSX Report ---> Portfolio Performance CSV'
     KNOWN_CURRENCIES = ['USD', 'EUR', 'GBP'] # EDIT ME IF YOUR CURRENCY IS MISSING
 
     CSV_HEADER = ['Date', 'Cash Account', 'Security Name', 'Type', 'Shares', 'Value', 'Transaction Currency', 'Note']
-    TRANSACTION_TYPES_MAPPING = {'Cash Amount': 'Deposit',
-                                'Cash dividend': 'Dividend',
+    TRANSACTION_TYPES_MAPPING = {'Cash dividend': 'Dividend',
                                 'Custody Fee': 'Fees',
                                 'VAT': 'Taxes'}
 
@@ -132,21 +131,35 @@ class Main(object):
             # Extract transaction data
             date = transaction[self.XLS_COL_TRADE_DATE]
             securityName = transaction[self.XLS_COL_INSTRUMENT_NAME]
+
+            # -- Qty
+            qty = transaction[self.XLS_COL_AMOUNT]
+            if qty == '-':
+                qty = ''
+                
+            # -- Price
+
+            if transaction[self.XLS_COL_BOOKED_AMOUNT_INSTRUMENT_CUR] != '-':
+                price = transaction[self.XLS_COL_BOOKED_AMOUNT_INSTRUMENT_CUR]
+            else:
+                price = transaction[self.XLS_COL_AMOUNT]
+
+            if price == '-':
+                price = ''
+
+            # -- transaction type
             transactionType = transaction[self.XLS_COL_EVENT]
 
             # Translate transaction type to a compatible one
             if transactionType in self.TRANSACTION_TYPES_MAPPING:
                 transactionType = self.TRANSACTION_TYPES_MAPPING[transactionType]
+            elif transactionType == 'Cash Amount':
+                if price > 0:
+                    transactionType = 'Deposit'
+                else:
+                    transactionType = 'Removal'
 
-            qty = transaction[self.XLS_COL_AMOUNT]
-            if qty == '-':
-                qty = ''
-                
-            price = transaction[self.XLS_COL_BOOKED_AMOUNT_INSTRUMENT_CUR]
-
-            if price == '-':
-                price = ''
-
+            # 
             currency = config['accounts'][accountID]['currency']
             note = transaction[self.XLS_COL_TRANSACTION_TYPE]
 
