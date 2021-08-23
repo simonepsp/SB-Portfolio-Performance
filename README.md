@@ -4,6 +4,10 @@ A simple yet functional Saxo Bank Transactions report to Portfolio Performance (
 
 See https://www.portfolio-performance.info/
 
+# Disclaimer
+Carefully check the output and whether it matches your portfolio report on Saxo Bank. 
+I'm not responsible if anything happens to your portfolio, for any decision you may take based on it or if your dishwasher abruptly stops working.
+
 ## Prerequisites
 
 * [Python 3.X]
