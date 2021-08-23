@@ -1,6 +1,6 @@
 # About
 
-A simple yet functional Saxo Bank Transactions report to Portfolio Performance (.csv file).
+A simple yet functional Saxo Bank Transactions report to Portfolio Performance (.csv file) tool.
 
 See https://www.portfolio-performance.info/
 
